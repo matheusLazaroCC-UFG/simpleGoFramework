@@ -4,9 +4,9 @@ import (
     "encoding/json"
     "net/http"
     "strings"
-    "time"
+    // "time"
 
-    "github.com/matheusLazaroCC-UFG/simpleGoFramework/framework"
+    // "github.com/matheusLazaroCC-UFG/simpleGoFramework/framework"
 )
 
 // JobController expõe endpoints para criar e consultar jobs

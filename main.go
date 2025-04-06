@@ -3,13 +3,14 @@ package main
 import (
     "github.com/matheusLazaroCC-UFG/simpleGoFramework/framework"
     "github.com/matheusLazaroCC-UFG/simpleGoFramework/job"
+	"github.com/matheusLazaroCC-UFG/simpleGoFramework/handler"
     "log"
 )
 
 func main() {
     // Configurações básicas
     config := &framework.Config{
-        Port: "3000",
+        Port: "5000",
     }
 
     // Cria a aplicação principal
@@ -17,15 +18,19 @@ func main() {
 
     // Instancia o serviço de "jobs" (tarefas em background)
     jobService := job.NewJobService()
-
     // Cria o controller de "jobs" e injeta o serviço
     jobController := job.NewJobController(jobService)
-
     // Registra o controller no mini-framework
     app.RegisterController(jobController)
 
-    log.Println("Servidor rodando em http://localhost:3000")
-    log.Println("Use POST /jobs para criar tarefas, GET /jobs e GET /jobs/{id} para consultar...")
+	// Instancia o serviço de "handler" (tarefas em background)
+    processService := handler.NewProcessService()
+    // Cria o controller de "jobs" e injeta o serviço
+    processController := handler.NewProcessController(processService)
+    // Registra o controller no mini-framework
+    app.RegisterController(processController)
+
+    log.Println("Servidor rodando em http://localhost:5000")
 
     // Inicia o servidor
     app.Start()
