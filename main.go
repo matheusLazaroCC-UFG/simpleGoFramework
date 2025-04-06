@@ -1,34 +1,31 @@
 package main
 
 import (
-    "log"
-    "net/http"
-    "strconv"
-
     "github.com/matheusLazaroCC-UFG/simpleGoFramework/framework"
-    "github.com/matheusLazaroCC-UFG/simpleGoFramework/tasks"
+    "github.com/matheusLazaroCC-UFG/simpleGoFramework/job"
+    "log"
 )
 
 func main() {
-    // Configuração básica
+    // Configurações básicas
     config := &framework.Config{
         Port: "3000",
     }
 
-    // Cria a aplicação principal (mini-framework)
+    // Cria a aplicação principal
     app := framework.NewApp(config)
 
-    // Instancia nosso serviço de tarefas
-    taskService := tasks.NewTaskService()
+    // Instancia o serviço de "jobs" (tarefas em background)
+    jobService := job.NewJobService()
 
-    // Cria o controller de tarefas, injeta o serviço
-    taskController := tasks.NewTaskController(taskService)
+    // Cria o controller de "jobs" e injeta o serviço
+    jobController := job.NewJobController(jobService)
 
-    // Registra as rotas definidas pelo nosso controller
-    app.RegisterController(taskController)
+    // Registra o controller no mini-framework
+    app.RegisterController(jobController)
 
-    log.Println("Para testar, acesse por exemplo:")
-    log.Println("GET http://localhost:3000/primes?start=1&end=1000&workers=5")
+    log.Println("Servidor rodando em http://localhost:3000")
+    log.Println("Use POST /jobs para criar tarefas, GET /jobs e GET /jobs/{id} para consultar...")
 
     // Inicia o servidor
     app.Start()

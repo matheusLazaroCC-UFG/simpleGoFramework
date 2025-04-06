@@ -1,8 +1,10 @@
 package framework
 
-import "net/http"
+import (
+    "net/http"
+)
 
-// Controller é a interface que todos os controllers devem implementar
+// Controller é a interface padrão dos controllers
 type Controller interface {
     RegisterRoutes(mux *http.ServeMux)
 }

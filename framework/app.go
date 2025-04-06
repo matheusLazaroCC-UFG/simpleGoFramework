@@ -5,14 +5,12 @@ import (
     "net/http"
 )
 
-// Config define configurações básicas (ex: porta)
+// Config define as configurações, como porta
 type Config struct {
     Port string
 }
 
-// App representa a aplicação principal, com:
-// - Mux para rotas
-// - Configurações
+// App representa nossa aplicação principal
 type App struct {
     mux    *http.ServeMux
     config *Config
@@ -26,13 +24,13 @@ func NewApp(config *Config) *App {
     }
 }
 
-// RegisterController registra as rotas do Controller
+// RegisterController registra as rotas de um Controller
 func (a *App) RegisterController(c Controller) {
     c.RegisterRoutes(a.mux)
 }
 
-// Start inicia o servidor HTTP na porta configurada
+// Start inicia o servidor HTTP
 func (a *App) Start() {
-    log.Printf("Servidor iniciado na porta %s...\n", a.config.Port)
+    log.Printf("Iniciando servidor na porta %s...\n", a.config.Port)
     log.Fatal(http.ListenAndServe(":"+a.config.Port, a.mux))
 }
